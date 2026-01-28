@@ -1,0 +1,29 @@
+import requests
+import time
+
+# Using CoinGecko API because it's free (I am broke yes) and doesn't need a key (Woooooo!!!)
+URL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd"
+
+def check_price():
+    try:
+        response = requests.get(URL)
+        data = response.json()
+        
+        btc = data['bitcoin']['usd']
+        eth = data['ethereum']['usd']
+        
+        print(f"BTC: ${btc}")
+        print(f"ETH: ${eth}")
+        
+        # Simple alert logic (duh)
+        if btc < 50000:
+            print("ALERT: BTC is cheap rn")
+            
+    except Exception as e:
+        print(f"API messed up mb dog: {e}")
+
+if __name__ == "__main__":
+    # Run twice just to test (big brain)
+    for i in range(2):
+        check_price()
+        time.sleep(2)
